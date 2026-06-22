@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>مطعم سمر | أشهى الأكلات العراقية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root{
+    --bg:#FDF6F1;
+    --bg-soft:#FBE7EC;
+    --bg-soft-2:#F6D9E2;
+    --primary:#8C3A57;
+    --primary-deep:#5E2440;
+    --primary-light:#E8A8BC;
+    --gold:#C8932A;
+    --ink:#3B1422;
+    --ink-soft:#7A4C5C;
+    --cream:#FFFBF8;
+    --white:#FFFFFF;
+    --shadow: 0 10px 30px rgba(94,36,64,.12);
+    --radius: 20px;
+    --font-display:'Aref Ruqaa', serif;
+    --font-body:'Cairo', sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none;}
+  input{font-family:inherit;}
+  a{color:inherit; text-decoration:none;}
+  .hidden{display:none !important;}
+  ::selection{background:var(--primary-light); color:var(--primary-deep);}
+
+  :focus-visible{outline:3px solid var(--gold); outline-offset:3px; border-radius:6px;}
+
+  /* ---------- Decorative seed pattern ---------- */
+  .seed-pattern{
+    background-image:
+      radial-gradient(circle at 12px 12px, rgba(140,58,87,.10) 2px, transparent 2.4px),
+      radial-gradient(circle at 28px 30px, rgba(200,147,42,.12) 2px, transparent 2.4px);
+    background-size: 40px 40px;
+  }
+
+  .stitch-divider{
+    width:100%; max-width:220px; height:14px; margin:14px auto 0;
+    background-image: repeating-linear-gradient(90deg, var(--gold) 0 8px, transparent 8px 16px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 2px;
+    position:relative;
+  }
+  .stitch-divider::before{
+    content:"❀";
+    position:absolute; right:50%; top:50%; transform:translate(50%,-58%);
+    background:var(--bg); padding:0 10px; color:var(--gold); font-size:16px;
+  }
+
+  /* ---------- Welcome overlay ---------- */
+  .welcome-overlay{
+    position:fixed; inset:0; z-index:200;
+    background: linear-gradient(160deg, var(--primary-deep), var(--primary) 65%);
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+    transition: opacity .5s ease, visibility .5s ease;
+  }
+  .welcome-overlay.closing{opacity:0; visibility:hidden; pointer-events:none;}
+  .welcome-card{
+    background:var(--cream);
+    border-radius:26px;
+    padding:46px 32px;
+    max-width:440px; width:100%;
+    text-align:center;
+    box-shadow:0 30px 60px rgba(0,0,0,.35);
+    animation: pop-in .6s cubic-bezier(.2,.9,.3,1.3);
+    position:relative;
+  }
+  @keyframes pop-in{ from{transform:scale(.85); opacity:0;} to{transform:scale(1); opacity:1;} }
+  .welcome-ornament{font-size:34px; color:var(--gold); margin-bottom:6px;}
+  .welcome-card h1{
+    font-family:var(--font-display);
+    font-size:clamp(28px,7vw,36px);
+    color:var(--primary-deep);
+    margin-bottom:10px;
+  }
+  .welcome-card p{ color:var(--ink-soft); font-size:15px; margin-bottom:4px;}
+  .welcome-card .welcome-sub{
+    margin-top:14px; font-size:14px; color:var(--primary);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .btn-primary{
+    margin-top:24px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+    color:#fff; padding:14px 30px; border-radius:50px;
+    font-weight:700; font-size:15px;
+    display:inline-flex; align-items:center; gap:10px;
+    box-shadow: var(--shadow);
+    transition: transform .2s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(253,246,241,.92);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--bg-soft-2);
+  }
+  .nav-wrap{
+    max-width:1100px; margin:0 auto; padding:14px 22px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    font-family:var(--font-display);
+    font-size:26px; color:var(--primary-deep); font-weight:700;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo i{color:var(--gold); font-size:18px;}
+  nav ul{display:flex; gap:26px; list-style:none;}
+  nav a{font-size:14px; font-weight:600; color:var(--ink-soft); transition:color .2s;}
+  nav a:hover{color:var(--primary);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:70px 22px 90px;
+    text-align:center;
+    background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  }
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--white); color:var(--primary);
+    padding:7px 16px; border-radius:50px; font-size:13px; font-weight:700;
+    box-shadow:var(--shadow); margin-bottom:22px;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-size:clamp(40px,9vw,68px);
+    color:var(--primary-deep);
+    line-height:1.15;
+  }
+  .hero h1 span{color:var(--gold);}
+  .hero p.tagline{
+    max-width:520px; margin:18px auto 0;
+    color:var(--ink-soft); font-size:17px;
+  }
+  .hero-location{
+    margin-top:22px; display:inline-flex; align-items:center; gap:10px;
+    color:var(--primary); font-weight:700; font-size:14px;
+    background:var(--white); padding:10px 18px; border-radius:50px; box-shadow:var(--shadow);
+  }
+  .hero-cta{
+    margin-top:34px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+  }
+  .btn-outline{
+    padding:13px 28px; border-radius:50px; font-weight:700; font-size:14px;
+    border:2px solid var(--primary); color:var(--primary); background:var(--white);
+    display:inline-flex; align-items:center; gap:8px; transition:.2s;
+  }
+  .btn-outline:hover{background:var(--primary); color:#fff;}
+  .btn-whatsapp{
+    padding:13px 28px; border-radius:50px; font-weight:700; font-size:14px;
+    background:#25D366; color:#fff; display:inline-flex; align-items:center; gap:8px;
+    box-shadow:var(--shadow);
+  }
+  .btn-ghost{
+    padding:11px 22px; border-radius:50px; font-weight:700; font-size:13px;
+    background:var(--bg-soft); color:var(--primary); display:inline-flex; align-items:center; gap:8px;
+  }
+
+  /* ---------- Section heading ---------- */
+  .section-head{ text-align:center; margin-bottom:30px;}
+  .section-head .eyebrow{ color:var(--gold); font-weight:700; font-size:13px; letter-spacing:1px;}
+  .section-head h2{
+    font-family:var(--font-display); font-size:clamp(30px,5vw,42px);
+    color:var(--primary-deep); margin-top:6px;
+  }
+  .menu-hint{ text-align:center; color:var(--ink-soft); font-size:13.5px; margin-bottom:30px;}
+
+  /* ---------- Menu ---------- */
+  .menu-section{ padding:80px 22px; max-width:1100px; margin:0 auto;}
+  .tabs{
+    display:flex; gap:10px; overflow-x:auto; padding-bottom:12px; margin-bottom:38px;
+    justify-content:flex-start; scrollbar-width:thin;
+  }
+  .tabs::-webkit-scrollbar{height:6px;}
+  .tabs::-webkit-scrollbar-thumb{background:var(--primary-light); border-radius:10px;}
+  .tab-btn{
+    flex:0 0 auto;
+    display:flex; align-items:center; gap:8px;
+    padding:11px 20px; border-radius:50px;
+    background:var(--white); color:var(--ink-soft);
+    border:2px solid var(--bg-soft-2); font-weight:700; font-size:14px;
+    transition:.2s;
+    white-space:nowrap;
+  }
+  .tab-btn i{color:var(--gold);}
+  .tab-btn.active{
+    background:linear-gradient(135deg, var(--primary), var(--primary-deep));
+    color:#fff; border-color:transparent;
+  }
+  .tab-btn.active i{color:#fff;}
+
+  .panel{display:none;}
+  .panel.active{display:block; animation:fade-up .4s ease;}
+  @keyframes fade-up{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+
+  .item-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:22px;
+  }
+  .item-card{
+    background:var(--white); border-radius:18px; overflow:hidden;
+    box-shadow:var(--shadow); position:relative;
+    border:1px solid var(--bg-soft-2);
+    display:flex; flex-direction:column;
+    transition: transform .25s ease;
+  }
+  .item-card:hover{transform:translateY(-4px);}
+  .scallop{
+    height:14px;
+    background-image: radial-gradient(circle at 10px 0, transparent 10px, var(--primary-light) 10.5px);
+    background-size:20px 20px; background-repeat:repeat-x;
+  }
+  .item-img{
+    height:150px; width:100%; object-fit:cover; background:var(--bg-soft);
+  }
+  .item-img-placeholder{
+    height:150px; width:100%; display:flex; align-items:center; justify-content:center; font-size:34px;
+  }
+  .ph-g1{ background:linear-gradient(135deg, #FBE7EC, #E8A8BC);}
+  .ph-g2{ background:linear-gradient(135deg, #F6DFB0, #C8932A);}
+  .ph-g3{ background:linear-gradient(135deg, #ECC6D6, #8C3A57);}
+  .ph-g4{ background:linear-gradient(135deg, #FAE3C7, #D98E5B);}
+  .ph-g5{ background:linear-gradient(135deg, #E9C6D6, #A8456B);}
+  .ph-g6{ background:linear-gradient(135deg, #FCE1E6, #C76B86);}
+  .ph-g1 i, .ph-g2 i, .ph-g4 i{ color:var(--primary-deep); opacity:.85;}
+  .ph-g3 i, .ph-g5 i, .ph-g6 i{ color:#fff; opacity:.92;}
+
+  .item-body{ padding:16px 18px 18px; flex:1; display:flex; flex-direction:column;}
+  .item-name{ font-weight:800; font-size:16px; color:var(--ink); margin-bottom:6px;}
+  .item-bottom{ margin-top:auto; display:flex; align-items:center; justify-content:space-between; padding-top:10px;}
+  .item-price{ color:var(--primary); font-weight:800; font-size:15px;}
+  .item-price small{ font-weight:600; font-size:11px; color:var(--ink-soft);}
+  .cart-add-btn{
+    width:34px; height:34px; border-radius:50%;
+    background:linear-gradient(135deg, var(--primary), var(--primary-deep)); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:14px; flex:0 0 auto;
+    transition: transform .15s ease;
+  }
+  .cart-add-btn:hover{ transform:scale(1.1);}
+  .admin-controls{ display:none; gap:8px; margin-top:10px;}
+  body.admin-mode .admin-controls{ display:flex;}
+  body.admin-mode .cart-add-btn{ display:none;}
+  .icon-btn{
+    flex:1; padding:8px; border-radius:10px; font-size:13px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .icon-btn.edit{ background:var(--bg-soft); color:var(--primary);}
+  .icon-btn.del{ background:#FBE4E4; color:#B23A3A;}
+
+  .add-item-btn{
+    display:none; margin:24px auto 0; padding:12px 26px; border-radius:50px;
+    background:var(--bg-soft); color:var(--primary); font-weight:700; font-size:14px;
+    align-items:center; gap:8px; border:2px dashed var(--primary-light);
+  }
+  body.admin-mode .add-item-btn{ display:flex;}
+
+  /* ---------- Location ---------- */
+  .location-section{ background:var(--bg-soft); padding:80px 22px;}
+  .location-grid{
+    max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1.3fr 1fr; gap:26px;
+  }
+  .map-box{ position:relative; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); min-height:340px;}
+  .map-box iframe{ width:100%; height:100%; min-height:340px; border:0; display:block;}
+  .map-pin{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    display:flex; flex-direction:column; align-items:center; z-index:5;
+  }
+  .map-pin .ring{
+    width:54px; height:54px; border-radius:50%;
+    background:rgba(232,168,188,.40); border:3px solid var(--primary);
+    display:flex; align-items:center; justify-content:center;
+    animation: pulse-ring 2.2s infinite;
+  }
+  .map-pin .ring i{ color:var(--primary-deep); font-size:20px;}
+  .map-pin .label{
+    margin-top:8px; background:var(--primary-deep); color:#fff; padding:7px 16px; border-radius:50px;
+    font-size:12px; font-weight:700; white-space:nowrap; box-shadow:var(--shadow); text-align:center;
+  }
+  @keyframes pulse-ring{
+    0%{ box-shadow:0 0 0 0 rgba(140,58,87,.45);}
+    70%{ box-shadow:0 0 0 20px rgba(140,58,87,0);}
+    100%{ box-shadow:0 0 0 0 rgba(140,58,87,0);}
+  }
+  .contact-card{
+    background:var(--white); border-radius:var(--radius); padding:34px 28px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:18px; justify-content:center;
+  }
+  .contact-card h3{ font-family:var(--font-display); font-size:26px; color:var(--primary-deep);}
+  .contact-row{ display:flex; align-items:center; gap:14px;}
+  .contact-row .ic{
+    width:44px; height:44px; border-radius:50%; background:var(--bg-soft);
+    color:var(--primary); display:flex; align-items:center; justify-content:center; flex:0 0 auto; font-size:17px;
+  }
+  .contact-row span{ font-size:14px; color:var(--ink-soft);}
+  .contact-row strong{ display:block; font-size:15px; color:var(--ink);}
+  .contact-actions{ display:flex; flex-wrap:wrap; gap:10px;}
+
+  /* ---------- QR ---------- */
+  .qr-section{ padding:80px 22px; text-align:center;}
+  .qr-box{
+    display:inline-flex; flex-direction:column; align-items:center; gap:16px;
+    background:var(--white); padding:30px 36px; border-radius:var(--radius); box-shadow:var(--shadow);
+    border:1px solid var(--bg-soft-2);
+  }
+  #qrcode{ padding:10px; background:#fff; border-radius:12px;}
+  .qr-download{
+    padding:10px 22px; border-radius:50px; background:var(--bg-soft); color:var(--primary);
+    font-weight:700; font-size:13px; display:inline-flex; align-items:center; gap:8px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{ text-align:center; padding:34px 22px 120px; color:var(--ink-soft); font-size:13px;}
+  footer .admin-link{ display:block; margin-top:8px; color:var(--primary-light); font-size:12px;}
+  .admin-badge{
+    position:fixed; top:14px; left:14px; z-index:120;
+    background:var(--primary-deep); color:#fff; padding:8px 16px; border-radius:50px;
+    font-size:12px; font-weight:700; display:flex; align-items:center; gap:10px;
+    box-shadow:var(--shadow);
+  }
+  .admin-badge button{ background:rgba(255,255,255,.18); color:#fff; padding:4px 10px; border-radius:50px; font-size:11px;}
+  #storageWarn{ font-size:10px; opacity:.85; font-weight:600;}
+
+  /* ---------- Floating action buttons ---------- */
+  .fab-stack{
+    position:fixed; bottom:20px; right:18px; z-index:90;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .fab-stack-left{ right:auto; left:18px;}
+  .fab{
+    position:relative;
+    width:54px; height:54px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:24px; box-shadow:0 8px 22px rgba(0,0,0,.25);
+    transition:transform .2s ease;
+  }
+  .fab:hover{ transform:scale(1.08);}
+  .fab.wa{ background:#25D366;}
+  .fab.tiktok{ background:#010101;}
+  .fab.cart{ background:linear-gradient(135deg, var(--primary), var(--primary-deep));}
+  .fab.bump{ animation: bump .35s ease;}
+  @keyframes bump{ 0%{transform:scale(1);} 50%{transform:scale(1.25);} 100%{transform:scale(1);} }
+  .cart-badge{
+    position:absolute; top:-5px; left:-5px;
+    background:var(--gold); color:#fff; font-size:11px; font-weight:800;
+    width:21px; height:21px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 2px 6px rgba(0,0,0,.25); border:2px solid var(--cream);
+  }
+
+  /* ---------- Modals ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(59,20,34,.55); z-index:300;
+    display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .modal-card{
+    background:var(--cream); border-radius:22px; padding:30px 26px; max-width:380px; width:100%;
+    box-shadow:0 30px 60px rgba(0,0,0,.3);
+    max-height:88vh; overflow-y:auto;
+  }
+  .modal-card.cart-card{ max-width:430px;}
+  .modal-card h3{ font-family:var(--font-display); font-size:22px; color:var(--primary-deep); margin-bottom:18px; text-align:center; display:flex; align-items:center; justify-content:center; gap:8px;}
+  .field{ margin-bottom:16px;}
+  .field label{ display:block; font-size:13px; font-weight:700; color:var(--ink-soft); margin-bottom:6px;}
+  .field input{
+    width:100%; padding:11px 14px; border-radius:12px; border:2px solid var(--bg-soft-2);
+    font-size:14px; background:var(--white); color:var(--ink);
+  }
+  .field input:focus{ border-color:var(--primary-light); outline:none;}
+  .img-preview{ width:100%; height:120px; border-radius:12px; object-fit:cover; margin-top:8px; background:var(--bg-soft);}
+  .modal-actions{ display:flex; gap:10px; margin-top:6px;}
+  .modal-actions button{ flex:1; padding:12px; border-radius:12px; font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; gap:8px;}
+  .btn-save{ background:linear-gradient(135deg, var(--primary), var(--primary-deep)); color:#fff;}
+  .btn-cancel{ background:var(--bg-soft); color:var(--ink-soft);}
+  .btn-del{ background:#FBE4E4; color:#B23A3A;}
+  .error-text{ color:#B23A3A; font-size:13px; text-align:center; margin-top:8px;}
+
+  /* ---------- Cart rows ---------- */
+  .cart-row{ display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--bg-soft-2);}
+  .cart-row-info{ flex:1; min-width:0;}
+  .cart-row-name{ font-weight:700; font-size:14px; color:var(--ink);}
+  .cart-row-price{ font-size:12px; color:var(--ink-soft);}
+  .cart-row-qty{ display:flex; align-items:center; gap:8px; background:var(--bg-soft); border-radius:50px; padding:4px 10px; flex:0 0 auto;}
+  .qty-btn{ width:22px; height:22px; border-radius:50%; background:var(--white); color:var(--primary); display:flex; align-items:center; justify-content:center; font-size:10px; box-shadow:0 1px 3px rgba(0,0,0,.15);}
+  .cart-row-qty span{ font-weight:700; font-size:13px; min-width:14px; text-align:center;}
+  .cart-remove{ width:26px; height:26px; border-radius:50%; background:#FBE4E4; color:#B23A3A; display:flex; align-items:center; justify-content:center; font-size:12px; flex:0 0 auto;}
+  .cart-empty{ text-align:center; padding:24px 0; color:var(--ink-soft); font-size:14px;}
+  .cart-empty i{ font-size:30px; color:var(--primary-light); margin-bottom:10px; display:block;}
+  .cart-total-row{
+    display:flex; justify-content:space-between; font-weight:800; padding:14px 0;
+    border-top:2px dashed var(--bg-soft-2); margin-top:6px; color:var(--primary-deep); font-size:15px;
+  }
+
+  @media (max-width:760px){
+    .location-grid{ grid-template-columns:1fr;}
+    nav ul{ display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body class="seed-pattern">
+
+  <!-- Welcome Overlay -->
+  <div id="welcomeOverlay" class="welcome-overlay">
+    <div class="welcome-card">
+      <div class="welcome-ornament">❀</div>
+      <h1>مرحباً بك في مطعم سمر</h1>
+      <p>سوف تتذوق أشهى الأكلات العراقية</p>
+      <p>نورونا في موقعنا، مقابل مول بغداد الجديدة</p>
+      <div class="welcome-sub"><i class="fa-solid fa-location-dot"></i> بغداد - مقابل مول بغداد الجديدة</div>
+      <button class="btn-primary" id="enterSiteBtn">تفضل بالدخول <i class="fa-solid fa-arrow-left"></i></button>
+    </div>
+  </div>
+
+  <!-- Admin badge -->
+  <div id="adminBadge" class="admin-badge hidden">
+    <span><i class="fa-solid fa-user-shield"></i> وضع الإدارة مفعّل</span>
+    <span id="storageWarn" class="hidden">(حفظ محلي فقط)</span>
+    <button id="exitAdminBtn">خروج</button>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-wrap">
+      <div class="logo"><i class="fa-solid fa-mortar-pestle"></i> سمر</div>
+      <nav>
+        <ul>
+          <li><a href="#hero">الرئيسية</a></li>
+          <li><a href="#menu">القائمة</a></li>
+          <li><a href="#location">موقعنا</a></li>
+        </ul>
+      </nav>
+      <a class="btn-whatsapp" id="headerWaBtn" target="_blank" rel="noopener" style="padding:9px 18px; font-size:13px;">
+        <i class="fa-brands fa-whatsapp"></i> تواصل معنا
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <span class="hero-eyebrow"><i class="fa-solid fa-star"></i> طعم بيتنا العراقي الأصيل</span>
+    <h1>مطعم <span>سمر</span></h1>
+    <p class="tagline">نكهات عراقية أصيلة، بلمسة عصرية أنيقة — كل طبق نطبخه بحب ليصلك دافئاً وشهياً.</p>
+    <div class="hero-location"><i class="fa-solid fa-location-dot"></i> مقابل مول بغداد الجديدة</div>
+    <div class="hero-cta">
+      <a href="#menu" class="btn-outline"><i class="fa-solid fa-book-open"></i> تصفح القائمة</a>
+      <a id="heroWaBtn" target="_blank" rel="noopener" class="btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> تواصل معنا</a>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section class="menu-section" id="menu">
+    <div class="section-head">
+      <div class="eyebrow">MENU</div>
+      <h2>قائمتنا الشهية</h2>
+      <div class="stitch-divider"></div>
+    </div>
+    <p class="menu-hint">اختاري ما يعجبك واضغطي <i class="fa-solid fa-basket-shopping" style="color:var(--primary);"></i> لإضافته إلى سلتك، ثم أرسلي طلبك مباشرة عبر واتساب 🌸</p>
+
+    <div class="tabs" id="tabsWrap"></div>
+    <div id="panelsWrap"></div>
+  </section>
+
+  <!-- Location -->
+  <section class="location-section" id="location">
+    <div class="section-head">
+      <div class="eyebrow">FIND US</div>
+      <h2>موقعنا</h2>
+      <div class="stitch-divider"></div>
+    </div>
+    <div class="location-grid">
+      <div class="map-box">
+        <iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <div class="map-pin">
+          <div class="ring"><i class="fa-solid fa-location-dot"></i></div>
+          <div class="label">مطعم سمر 🌸<br>مقابل مول بغداد الجديدة</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <h3>زورونا اليوم</h3>
+        <div class="contact-row">
+          <div class="ic"><i class="fa-solid fa-location-dot"></i></div>
+          <div><strong>العنوان</strong><span>مقابل مول بغداد الجديدة، بغداد</span></div>
+        </div>
+        <div class="contact-row">
+          <div class="ic"><i class="fa-brands fa-whatsapp"></i></div>
+          <div><strong><bdi dir="ltr">0773 446 4817</bdi></strong><span>للطلب والاستفسار عبر واتساب</span></div>
+        </div>
+        <div class="contact-actions">
+          <a id="locationWaBtn" target="_blank" rel="noopener" class="btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> راسلنا الآن
+          </a>
+          <a id="directionsBtn" target="_blank" rel="noopener" class="btn-ghost">
+            <i class="fa-solid fa-diamond-turn-right"></i> احصل على الاتجاهات
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QR -->
+  <section class="qr-section" id="qr">
+    <div class="section-head">
+      <div class="eyebrow">SHARE</div>
+      <h2>شارك موقعنا</h2>
+      <div class="stitch-divider"></div>
+    </div>
+    <div class="qr-box">
+      <div id="qrcode"></div>
+      <p style="font-size:13px; color:var(--ink-soft);">امسح الرمز لزيارة موقع مطعم سمر</p>
+      <button class="qr-download" id="downloadQrBtn"><i class="fa-solid fa-download"></i> تحميل الرمز</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="logo" style="justify-content:center; margin-bottom:6px;"><i class="fa-solid fa-mortar-pestle"></i> سمر</div>
+    <p>© 2026 مطعم سمر — جميع الحقوق محفوظة</p>
+    <a href="#" id="adminTriggerLink" class="admin-link"><i class="fa-solid fa-key"></i> دخول الإدارة</a>
+  </footer>
+
+  <!-- Floating buttons -->
+  <div class="fab-stack">
+    <a id="fabWa" class="fab wa" target="_blank" rel="noopener" aria-label="واتساب"><i class="fa-brands fa-whatsapp"></i></a>
+    <a id="fabTiktok" class="fab tiktok" target="_blank" rel="noopener" aria-label="تيك توك"><i class="fa-brands fa-tiktok"></i></a>
+  </div>
+  <div class="fab-stack fab-stack-left">
+    <button id="cartFab" class="fab cart" aria-label="السلة">
+      <i class="fa-solid fa-basket-shopping"></i>
+      <span id="cartBadge" class="cart-badge hidden">0</span>
+    </button>
+  </div>
+
+  <!-- Admin login modal -->
+  <div id="adminLoginModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3><i class="fa-solid fa-lock"></i> دخول لوحة التحكم</h3>
+      <div class="field">
+        <label>رمز الدخول</label>
+        <input type="password" id="adminPassInput" placeholder="••••••••">
+      </div>
+      <p id="adminError" class="error-text hidden">الرمز غير صحيح، حاول مرة أخرى</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="adminCancelBtn">إلغاء</button>
+        <button class="btn-save" id="adminLoginBtn">دخول</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Item edit modal -->
+  <div id="itemEditModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3 id="itemModalTitle">تعديل الصنف</h3>
+      <div class="field">
+        <label>اسم الصنف</label>
+        <input type="text" id="itemNameInput" placeholder="مثال: قوزي عراقي">
+      </div>
+      <div class="field">
+        <label>السعر (دينار عراقي)</label>
+        <input type="number" id="itemPriceInput" placeholder="مثال: 3000">
+      </div>
+      <div class="field">
+        <label>صورة الصنف (اختياري)</label>
+        <input type="file" id="itemImageInput" accept="image/*">
+        <img id="itemImgPreview" class="img-preview hidden" alt="معاينة الصورة">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="itemCancelBtn">إلغاء</button>
+        <button class="btn-save" id="itemSaveBtn">حفظ</button>
+      </div>
+      <div class="modal-actions" style="margin-top:8px;">
+        <button class="btn-del" id="itemDeleteBtn" style="flex:1;">حذف الصنف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart modal -->
+  <div id="cartModal" class="modal-overlay hidden">
+    <div class="modal-card cart-card">
+      <h3><i class="fa-solid fa-basket-shopping"></i> سلتك</h3>
+      <div id="cartItemsWrap"></div>
+      <div id="cartEmptyState" class="cart-empty hidden">
+        <i class="fa-solid fa-basket-shopping"></i>
+        سلتك فارغة، أضيفي أصناف من القائمة 🌸
+      </div>
+      <div id="cartTotalRow" class="cart-total-row hidden">
+        <span>المجموع الكلي</span><span id="cartTotalVal">0 د.ع</span>
+      </div>
+      <div id="cartNameField" class="field hidden">
+        <label>اسمك (اختياري)</label>
+        <input type="text" id="cartNameInput" placeholder="مثال: أحمد">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="cartCloseBtn">إغلاق</button>
+        <button class="btn-save hidden" id="cartSendBtn"><i class="fa-brands fa-whatsapp"></i> إرسال الطلب</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============ Settings ============ */
+  const WHATSAPP_NUMBER = "9647734464817"; // 0773 446 4817 بصيغة دولية
+  const TIKTOK_URL = "https://www.tiktok.com/@summer_11r?_r=1&_t=ZS-97P5Yzhj35h";
+  const RESTAURANT_ADDRESS = "مقابل مول بغداد الجديدة، بغداد، العراق";
+  const ADMIN_PASSCODE = "Samar2026"; // يمكن لصاحبة المطعم تغيير هذا الرمز من هنا
+  const STORAGE_KEY = "samar-menu-v2";
+
+  function waLink(message){
+    return "https://wa.me/" + WHATSAPP_NUMBER + (message ? ("?text=" + encodeURIComponent(message)) : "");
+  }
+  function hasStorage(){ return typeof window.storage !== "undefined"; }
+
+  /* ============ Default menu data ============ */
+  function genId(){ return "i" + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  const defaultMenu = {
+    iraqi: { label:"الأكلات العراقية", icon:"fa-solid fa-bowl-food", items:[
+      {id:genId(), name:"تمن ومرق", price:3000, image:null, icon:"fa-solid fa-bowl-rice", color:"g1"},
+      {id:genId(), name:"برياني", price:3000, image:null, icon:"fa-solid fa-bowl-food", color:"g2"},
+      {id:genId(), name:"تمن احمر وسمك", price:4000, image:null, icon:"fa-solid fa-fish", color:"g3"},
+      {id:genId(), name:"صينية بغدادية", price:5000, image:null, icon:"fa-solid fa-plate-wheat", color:"g4"},
+      {id:genId(), name:"تمن باكلة ودجاج", price:4000, image:null, icon:"fa-solid fa-drumstick-bite", color:"g5"},
+      {id:genId(), name:"برياني دجاج", price:4000, image:null, icon:"fa-solid fa-bowl-rice", color:"g6"}
+    ]},
+    dolma: { label:"الدولمة العراقية", icon:"fa-solid fa-leaf", items:[
+      {id:genId(), name:"نفر دولمة", price:3000, image:null, icon:"fa-solid fa-leaf", color:"g3"},
+      {id:genId(), name:"جدر صغير", price:5000, image:null, icon:"fa-solid fa-leaf", color:"g1"},
+      {id:genId(), name:"جدر وسط", price:10000, image:null, icon:"fa-solid fa-leaf", color:"g5"},
+      {id:genId(), name:"جدر كبير", price:15000, image:null, icon:"fa-solid fa-leaf", color:"g2"}
+    ]},
+    breakfast: { label:"قسم الفطور", icon:"fa-solid fa-mug-saucer", items:[
+      {id:genId(), name:"مخلمة طماطة", price:2500, image:null, icon:"fa-solid fa-egg", color:"g4"},
+      {id:genId(), name:"مخلمة لحم", price:3000, image:null, icon:"fa-solid fa-egg", color:"g6"},
+      {id:genId(), name:"جلفراي", price:3000, image:null, icon:"fa-solid fa-utensils", color:"g1"},
+      {id:genId(), name:"لفة جبن", price:1000, image:null, icon:"fa-solid fa-cheese", color:"g2"},
+      {id:genId(), name:"شوربة", price:1500, image:null, icon:"fa-solid fa-bowl-food", color:"g3"},
+      {id:genId(), name:"باكلة بالدهن", price:3000, image:null, icon:"fa-solid fa-seedling", color:"g5"},
+      {id:genId(), name:"كبة", price:2500, image:null, icon:"fa-solid fa-circle", color:"g4"}
+    ]},
+    sandwiches: { label:"السندويشات", icon:"fa-solid fa-bread-slice", items:[
+      {id:genId(), name:"بركر", price:2500, image:null, icon:"fa-solid fa-burger", color:"g6"},
+      {id:genId(), name:"زنكر", price:2500, image:null, icon:"fa-solid fa-drumstick-bite", color:"g1"},
+      {id:genId(), name:"صاج دجاج", price:2500, image:null, icon:"fa-solid fa-fire", color:"g3"},
+      {id:genId(), name:"قدح فنكر", price:1000, image:null, icon:"fa-solid fa-drumstick-bite", color:"g5"}
+    ]},
+    drinks: { label:"قسم المشروبات", icon:"fa-solid fa-glass-water", items:[
+      {id:genId(), name:"مياه", price:250, image:null, icon:"fa-solid fa-bottle-water", color:"g1"},
+      {id:genId(), name:"شاي", price:250, image:null, icon:"fa-solid fa-mug-hot", color:"g2"},
+      {id:genId(), name:"ببسي", price:500, image:null, icon:"fa-solid fa-glass-water", color:"g6"},
+      {id:genId(), name:"لبن", price:500, image:null, icon:"fa-solid fa-glass-water", color:"g4"}
+    ]}
+  };
+
+  let menuData = null;
+  let activeCategory = "iraqi";
+  let isAdmin = false;
+  let editingContext = null; // {cat, id} | {cat, id:null}
+  let cart = []; // {catKey, itemId, name, price, qty}
+
+  /* ============ Storage ============ */
+  async function loadMenu(){
+    if(!hasStorage()){
+      menuData = JSON.parse(JSON.stringify(defaultMenu));
+      renderTabs(); renderPanels();
+      return;
+    }
+    try{
+      const res = await window.storage.get(STORAGE_KEY, true);
+      menuData = JSON.parse(res.value);
+    }catch(e){
+      menuData = JSON.parse(JSON.stringify(defaultMenu));
+      saveMenu();
+    }
+    renderTabs();
+    renderPanels();
+  }
+
+  async function saveMenu(){
+    if(!hasStorage()) return;
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify(menuData), true);
+    }catch(e){
+      console.error("storage error", e);
+    }
+  }
+
+  /* ============ Render menu ============ */
+  function fmtPrice(p){ return Number(p).toLocaleString("en-US"); }
+
+  function escapeHtml(str){
+    const d = document.createElement("div");
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function renderTabs(){
+    const wrap = document.getElementById("tabsWrap");
+    wrap.innerHTML = "";
+    Object.keys(menuData).forEach(catKey=>{
+      const cat = menuData[catKey];
+      const btn = document.createElement("button");
+      btn.className = "tab-btn" + (catKey === activeCategory ? " active" : "");
+      btn.innerHTML = '<i class="' + cat.icon + '"></i> ' + cat.label;
+      btn.addEventListener("click", ()=>{ activeCategory = catKey; renderTabs(); renderPanels(); });
+      wrap.appendChild(btn);
+    });
+  }
+
+  function renderPanels(){
+    const wrap = document.getElementById("panelsWrap");
+    wrap.innerHTML = "";
+    Object.keys(menuData).forEach(catKey=>{
+      const cat = menuData[catKey];
+      const panel = document.createElement("div");
+      panel.className = "panel" + (catKey === activeCategory ? " active" : "");
+
+      const grid = document.createElement("div");
+      grid.className = "item-grid";
+      cat.items.forEach(item=> grid.appendChild(buildItemCard(catKey, item)));
+      panel.appendChild(grid);
+
+      const addBtn = document.createElement("button");
+      addBtn.className = "add-item-btn";
+      addBtn.innerHTML = '<i class="fa-solid fa-plus"></i> إضافة صنف جديد إلى ' + cat.label;
+      addBtn.addEventListener("click", ()=> openItemModal(catKey, null));
+      panel.appendChild(addBtn);
+
+      wrap.appendChild(panel);
+    });
+  }
+
+  function buildItemCard(catKey, item){
+    const card = document.createElement("div");
+    card.className = "item-card";
+
+    const scallop = document.createElement("div");
+    scallop.className = "scallop";
+    card.appendChild(scallop);
+
+    if(item.image){
+      const img = document.createElement("img");
+      img.className = "item-img";
+      img.src = item.image;
+      img.alt = item.name;
+      card.appendChild(img);
+    } else {
+      const ph = document.createElement("div");
+      ph.className = "item-img-placeholder ph-" + (item.color || "g1");
+      ph.innerHTML = '<i class="' + (item.icon || menuData[catKey].icon) + '"></i>';
+      card.appendChild(ph);
+    }
+
+    const body = document.createElement("div");
+    body.className = "item-body";
+    body.innerHTML =
+      '<div class="item-name">' + escapeHtml(item.name) + '</div>' +
+      '<div class="item-bottom">' +
+        '<div class="item-price">' + fmtPrice(item.price) + ' <small>د.ع</small></div>' +
+        '<button class="cart-add-btn" aria-label="أضف للسلة"><i class="fa-solid fa-cart-plus"></i></button>' +
+      '</div>' +
+      '<div class="admin-controls">' +
+        '<button class="icon-btn edit"><i class="fa-solid fa-pen"></i> تعديل</button>' +
+        '<button class="icon-btn del"><i class="fa-solid fa-trash"></i> حذف</button>' +
+      '</div>';
+    card.appendChild(body);
+
+    body.querySelector(".cart-add-btn").addEventListener("click", ()=> addToCart(catKey, item.id));
+    body.querySelector(".edit").addEventListener("click", ()=> openItemModal(catKey, item.id));
+    body.querySelector(".del").addEventListener("click", ()=> deleteItem(catKey, item.id));
+
+    return card;
+  }
+
+  /* ============ Item modal ============ */
+  const itemModal = document.getElementById("itemEditModal");
+  const itemNameInput = document.getElementById("itemNameInput");
+  const itemPriceInput = document.getElementById("itemPriceInput");
+  const itemImageInput = document.getElementById("itemImageInput");
+  const itemImgPreview = document.getElementById("itemImgPreview");
+  const itemModalTitle = document.getElementById("itemModalTitle");
+  const itemDeleteBtn = document.getElementById("itemDeleteBtn");
+
+  let pendingImageData = null;
+
+  function openItemModal(catKey, itemId){
+    editingContext = { cat: catKey, id: itemId };
+    pendingImageData = undefined;
+    itemImageInput.value = "";
+    if(itemId){
+      const item = menuData[catKey].items.find(i=>i.id===itemId);
+      itemModalTitle.textContent = "تعديل الصنف";
+      itemNameInput.value = item.name;
+      itemPriceInput.value = item.price;
+      if(item.image){ itemImgPreview.src = item.image; itemImgPreview.classList.remove("hidden"); }
+      else { itemImgPreview.classList.add("hidden"); }
+      itemDeleteBtn.classList.remove("hidden");
+    } else {
+      itemModalTitle.textContent = "إضافة صنف جديد";
+      itemNameInput.value = "";
+      itemPriceInput.value = "";
+      itemImgPreview.classList.add("hidden");
+      itemDeleteBtn.classList.add("hidden");
+    }
+    itemModal.classList.remove("hidden");
+  }
+
+  function closeItemModal(){ itemModal.classList.add("hidden"); editingContext = null; }
+
+  itemImageInput.addEventListener("change", function(){
+    const file = this.files[0];
+    if(!file) return;
+    resizeImage(file, 520, 0.72).then(dataUrl=>{
+      pendingImageData = dataUrl;
+      itemImgPreview.src = dataUrl;
+      itemImgPreview.classList.remove("hidden");
+    }).catch(()=>{ alert("تعذرت قراءة الصورة، جرّب صورة أخرى."); });
+  });
+
+  function resizeImage(file, maxWidth, quality){
+    return new Promise((resolve, reject)=>{
+      const reader = new FileReader();
+      reader.onload = e=>{
+        const img = new Image();
+        img.onload = ()=>{
+          let w = img.width, h = img.height;
+          if(w > maxWidth){ h = Math.round(h * (maxWidth / w)); w = maxWidth; }
+          const canvas = document.createElement("canvas");
+          canvas.width = w; canvas.height = h;
+          canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL("image/jpeg", quality));
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  document.getElementById("itemSaveBtn").addEventListener("click", function(){
+    const name = itemNameInput.value.trim();
+    const price = parseInt(itemPriceInput.value, 10);
+    if(!name || isNaN(price)){
+      alert("الرجاء إدخال اسم الصنف والسعر بشكل صحيح.");
+      return;
+    }
+    const cat = editingContext.cat;
+    if(editingContext.id){
+      const item = menuData[cat].items.find(i=>i.id===editingContext.id);
+      item.name = name;
+      item.price = price;
+      if(pendingImageData) item.image = pendingImageData;
+    } else {
+      menuData[cat].items.push({ id: genId(), name, price, image: pendingImageData || null, icon: menuData[cat].icon, color: "g1" });
+    }
+    saveMenu();
+    renderPanels();
+    closeItemModal();
+  });
+
+  document.getElementById("itemCancelBtn").addEventListener("click", closeItemModal);
+
+  function deleteItem(catKey, itemId){
+    if(!confirm("هل أنت متأكدة من حذف هذا الصنف؟")) return;
+    menuData[catKey].items = menuData[catKey].items.filter(i=>i.id!==itemId);
+    cart = cart.filter(c=>!(c.catKey===catKey && c.itemId===itemId));
+    saveMenu();
+    renderPanels();
+    updateCartBadge();
+  }
+
+  itemDeleteBtn.addEventListener("click", function(){
+    if(!editingContext || !editingContext.id) return;
+    deleteItem(editingContext.cat, editingContext.id);
+    closeItemModal();
+  });
+
+  /* ============ Admin login ============ */
+  const adminLoginModal = document.getElementById("adminLoginModal");
+  document.getElementById("adminTriggerLink").addEventListener("click", function(e){
+    e.preventDefault();
+    document.getElementById("adminPassInput").value = "";
+    document.getElementById("adminError").classList.add("hidden");
+    adminLoginModal.classList.remove("hidden");
+  });
+  document.getElementById("adminCancelBtn").addEventListener("click", ()=> adminLoginModal.classList.add("hidden"));
+  document.getElementById("adminLoginBtn").addEventListener("click", function(){
+    const val = document.getElementById("adminPassInput").value;
+    if(val === ADMIN_PASSCODE){
+      isAdmin = true;
+      document.body.classList.add("admin-mode");
+      document.getElementById("adminBadge").classList.remove("hidden");
+      document.getElementById("storageWarn").classList.toggle("hidden", hasStorage());
+      adminLoginModal.classList.add("hidden");
+      renderPanels();
+    } else {
+      document.getElementById("adminError").classList.remove("hidden");
+    }
+  });
+  document.getElementById("exitAdminBtn").addEventListener("click", function(){
+    isAdmin = false;
+    document.body.classList.remove("admin-mode");
+    document.getElementById("adminBadge").classList.add("hidden");
+  });
+
+  /* ============ Cart ============ */
+  function addToCart(catKey, itemId){
+    const item = menuData[catKey].items.find(i=>i.id===itemId);
+    if(!item) return;
+    const existing = cart.find(c=>c.itemId===itemId && c.catKey===catKey);
+    if(existing){ existing.qty += 1; }
+    else { cart.push({ catKey, itemId, name:item.name, price:item.price, qty:1 }); }
+    updateCartBadge();
+    bumpCartFab();
+  }
+
+  function changeQty(catKey, itemId, delta){
+    const line = cart.find(c=>c.catKey===catKey && c.itemId===itemId);
+    if(!line) return;
+    line.qty += delta;
+    if(line.qty <= 0){ cart = cart.filter(c=>c!==line); }
+    updateCartBadge();
+    renderCart();
+  }
+
+  function removeFromCart(catKey, itemId){
+    cart = cart.filter(c=>!(c.catKey===catKey && c.itemId===itemId));
+    updateCartBadge();
+    renderCart();
+  }
+
+  function updateCartBadge(){
+    const count = cart.reduce((s,c)=>s+c.qty,0);
+    const badge = document.getElementById("cartBadge");
+    if(count>0){ badge.textContent = count; badge.classList.remove("hidden"); }
+    else { badge.classList.add("hidden"); }
+  }
+
+  function bumpCartFab(){
+    const fab = document.getElementById("cartFab");
+    fab.classList.remove("bump");
+    void fab.offsetWidth;
+    fab.classList.add("bump");
+  }
+
+  function renderCart(){
+    const wrap = document.getElementById("cartItemsWrap");
+    const empty = document.getElementById("cartEmptyState");
+    const totalRow = document.getElementById("cartTotalRow");
+    const nameField = document.getElementById("cartNameField");
+    const sendBtn = document.getElementById("cartSendBtn");
+    wrap.innerHTML = "";
+
+    if(cart.length === 0){
+      empty.classList.remove("hidden");
+      totalRow.classList.add("hidden");
+      nameField.classList.add("hidden");
+      sendBtn.classList.add("hidden");
+      return;
+    }
+    empty.classList.add("hidden");
+    totalRow.classList.remove("hidden");
+    nameField.classList.remove("hidden");
+    sendBtn.classList.remove("hidden");
+
+    let total = 0;
+    cart.forEach(line=>{
+      total += line.price * line.qty;
+      const row = document.createElement("div");
+      row.className = "cart-row";
+      row.innerHTML =
+        '<div class="cart-row-info"><div class="cart-row-name">' + escapeHtml(line.name) + '</div><div class="cart-row-price">' + fmtPrice(line.price) + ' د.ع</div></div>' +
+        '<div class="cart-row-qty">' +
+          '<button class="qty-btn minus"><i class="fa-solid fa-minus"></i></button>' +
+          '<span>' + line.qty + '</span>' +
+          '<button class="qty-btn plus"><i class="fa-solid fa-plus"></i></button>' +
+        '</div>' +
+        '<button class="cart-remove"><i class="fa-solid fa-xmark"></i></button>';
+      row.querySelector(".minus").addEventListener("click", ()=> changeQty(line.catKey, line.itemId, -1));
+      row.querySelector(".plus").addEventListener("click", ()=> changeQty(line.catKey, line.itemId, 1));
+      row.querySelector(".cart-remove").addEventListener("click", ()=> removeFromCart(line.catKey, line.itemId));
+      wrap.appendChild(row);
+    });
+    document.getElementById("cartTotalVal").textContent = fmtPrice(total) + " د.ع";
+  }
+
+  document.getElementById("cartFab").addEventListener("click", function(){
+    renderCart();
+    document.getElementById("cartModal").classList.remove("hidden");
+  });
+  document.getElementById("cartCloseBtn").addEventListener("click", function(){
+    document.getElementById("cartModal").classList.add("hidden");
+  });
+  document.getElementById("cartSendBtn").addEventListener("click", function(){
+    if(cart.length === 0) return;
+    const custName = document.getElementById("cartNameInput").value.trim();
+    let total = 0;
+    let msg = "مرحباً 🌸، ";
+    msg += custName ? ("أنا " + custName + "، ") : "";
+    msg += "أريد أن أطلب من مطعم سمر:\n\n";
+    cart.forEach(line=>{
+      const lineTotal = line.price * line.qty;
+      total += lineTotal;
+      msg += "• " + line.name + " × " + line.qty + " = " + fmtPrice(lineTotal) + " د.ع\n";
+    });
+    msg += "\nالمجموع الكلي: " + fmtPrice(total) + " د.ع";
+    window.open(waLink(msg), "_blank");
+    cart = [];
+    updateCartBadge();
+    document.getElementById("cartModal").classList.add("hidden");
+  });
+
+  /* ============ Welcome overlay ============ */
+  function closeWelcome(){
+    const ov = document.getElementById("welcomeOverlay");
+    ov.classList.add("closing");
+    setTimeout(()=> ov.remove(), 550);
+  }
+  document.getElementById("enterSiteBtn").addEventListener("click", closeWelcome);
+  document.getElementById("welcomeOverlay").addEventListener("click", function(e){
+    if(e.target === this) closeWelcome();
+  });
+
+  /* ============ Links setup ============ */
+  document.getElementById("headerWaBtn").href = waLink("مرحباً مطعم سمر 🌸، أريد الاستفسار");
+  document.getElementById("heroWaBtn").href = waLink("مرحباً مطعم سمر 🌸، أريد الاستفسار");
+  document.getElementById("locationWaBtn").href = waLink("مرحباً مطعم سمر 🌸، أريد الاستفسار");
+  document.getElementById("fabWa").href = waLink("مرحباً مطعم سمر 🌸");
+  document.getElementById("fabTiktok").href = TIKTOK_URL;
+  document.getElementById("mapFrame").src = "https://www.google.com/maps?q=" + encodeURIComponent(RESTAURANT_ADDRESS) + "&output=embed";
+  document.getElementById("directionsBtn").href = "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(RESTAURANT_ADDRESS);
+
+  /* ============ QR Code ============ */
+  window.addEventListener("load", function(){
+    try{
+      new QRCode(document.getElementById("qrcode"), {
+        text: window.location.href,
+        width: 170,
+        height: 170,
+        colorDark: "#5E2440",
+        colorLight: "#FFFBF8",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }catch(e){ console.error("QR error", e); }
+  });
+
+  document.getElementById("downloadQrBtn").addEventListener("click", function(){
+    const canvas = document.querySelector("#qrcode canvas");
+    if(!canvas){ alert("الرمز قيد التحميل، حاول بعد لحظة."); return; }
+    const a = document.createElement("a");
+    a.href = canvas.toDataURL("image/png");
+    a.download = "samar-restaurant-qr.png";
+    a.click();
+  });
+
+  /* ============ Init ============ */
+  loadMenu();
+
+})();
+</script>
+</body>
+</html>
